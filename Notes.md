@@ -214,3 +214,19 @@
       - value: connection string
     - command: ["/bin/sh", "-c"]
     - args
+
+### Init Container
+
+- Use case: my app has a dependency (e.g., database, API, files) on [XYZ] but I don't want to clutter it with infrastructure code.
+- A Pod can have multiple containers running apps within it, but it can also have one or more init containers, which are run before the app containers are started.
+- Always run to completion.
+- Each init container must complete successfully before the next one starts.
+- If it fails, the kubelet repeatedly restarts it until it succeeds (unless its restartPolicy is set to NEVER).
+- Probes are not supported.
+- https://kubernetes.io/docs/concepts/cluster-administration/logging/
+
+---
+
+## Selectors
+
+### Labels
