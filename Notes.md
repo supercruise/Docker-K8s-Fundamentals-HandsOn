@@ -199,8 +199,8 @@
 - metadata
   - name
   - labels
-    - app
-    - type
+    - app: 
+    - type: 
 - spec
   - containers
     - name
@@ -225,8 +225,56 @@
 - Probes are not supported.
 - https://kubernetes.io/docs/concepts/cluster-administration/logging/
 
+### Pod Types
+- Static pods: These are pods that are managed directly by the kubelet daemon on a specific node, without the API server observing them.
+- ReplicationController (RC) pods
+- Deployment or application pods: 
+- DaemonSet pods: DaemonSet pods ensure that a copy of a pod runs on each node in the Kubernetes cluster. They are useful for deploying system-level agents or services that need to be present on every node, such as log collectors or monitoring agents.
+- Job and CronJob pods: Jobs and CronJobs are used to run batch processes or scheduled tasks in Kubernetes. Jobs are suitable for one-time tasks, while CronJobs provide scheduling capabilities for recurring tasks. 
+- Empty pods: Empty pods are pods that don't run any containers. They can be used as a placeholder or as a mechanism to reserve resources for future use.
+
+### References
+https://kubernetes.io/docs/concepts/workloads/pods/
+
 ---
 
 ## Selectors
 
 ### Labels
+
+- Labels are key/value pairs that are attached to objects, such as Pods.
+- Key-value pairs used to identify, describe, and group related sets of objects or resources.
+- Labels can be attached to objects at creation time and subsequently added and modified at any time.
+- Example
+  - labels:
+    - app: myapp
+    - type: front-end
+- Other example labels
+  - "release" : "stable"
+  - "environment" : "dev"
+  - "tier" : "cache"
+  - "partition" : "customerB"
+  - "track" : "weekly"
+
+### Selectors
+- Selectors use labels to filter or select objects:
+  -  match a set of resources based on their labels.
+  - defining relationships between resources.
+  - grouping related resources together.
+- The API currently supports two types of selectors: _equality-based_ and _set-based_.
+  - **equality-based**
+  environment = production
+  tier != frontend
+  - **set-based**
+  environment in (production, qa)
+  tier notin (frontend, backend)
+  partition
+  !partition
+- A label selector can be made of multiple requirements which are comma-separated. In the case of multiple requirements, all must be satisfied so the comma separator acts as a logical AND (&&) operator.
+- Node selector: **Make a pod to run in a specific node.**
+
+### Reference
+https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+
+---
+
